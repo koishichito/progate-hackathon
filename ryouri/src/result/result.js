@@ -1,16 +1,12 @@
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-import App from "../App.js";
-import curry from "../image/カレーライス.png";
 
-function Detail() {
-  const name = "カレーライス";
-  const image = "";
+function Result() {
+  const name = "検索結果";
 
   return (
     <>
       <div>
         <h1>{name}</h1>
-        <img src={curry} />
       </div>
 
       <div className="back">
@@ -20,4 +16,4 @@ function Detail() {
   );
 }
 
-export default Detail;
+export default Result;

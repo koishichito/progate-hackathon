@@ -24,7 +24,7 @@ function App() {
       backgroundColor: '#f0f0f0',
       fontFamily: 'Arial, sans-serif'
     }}>
-      <h1 style={{ marginBottom: '20px' }}>Ryouri</h1>
+      <h1 style={{ marginBottom: '20px' }}>ryouri</h1>
       <form onSubmit={handleSearch} style={{ display: 'flex', width: '100%', maxWidth: '400px' }}>
         <input
           type="text"

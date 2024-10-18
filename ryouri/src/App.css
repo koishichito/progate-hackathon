@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 .App {
   text-align: center;
 }
@@ -37,6 +42,21 @@
   }
 }
 
+.text-center {
+  text-align: center;
+}
+
+.text-center h1 {
+  font-size: 8rem; /* 大きなフォントサイズ */
+  margin: 0; /* マージンをリセット */
+  color: #EA580C; /* 文字色を設定 */
+}
+
+.text-center p {
+  font-size: 0.75rem;
+  color: #5C1C0B; /* 説明文の色 */
+  margin-top: 10px; /* 上のマージン */
+}
 
 .home-container {
   display: flex;
@@ -44,7 +64,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #f0f0f0;
+  background-color: #FEE6DC;
   font-family: Arial, sans-serif;
 }
 

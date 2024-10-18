@@ -42,11 +42,15 @@ function Home() {
 
   return (
     <div className="home-container">
-      <h1 style={{ marginBottom: '20px' }}>Cook</h1>
+      <div className="text-center">
+        <h1>ryouri</h1>
+        <p >あなたの料理の冒険が始まります</p>
+
+      </div>
       <form onSubmit={handleSearch} className="search-form">
         <input
           type="text"
-          placeholder="検索ワードを入力..."
+          placeholder="料理名や食材を検索..."
           value={searchTerm}
           onChange={handleChange}
           className="search-input"
@@ -81,12 +85,6 @@ function Home() {
         </div>
       )}
 
-      {searchTerm && (
-        <div className="result">
-          <h2>検索結果:</h2>
-          <p>{searchTerm}</p>
-        </div>
-      )}
       <div className="change_page">
         <Link to="/result">Resultページへ</Link>
       </div>

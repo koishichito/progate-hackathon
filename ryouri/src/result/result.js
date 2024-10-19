@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { useState } from "react";
 import { Search, Filter } from "lucide-react";
 import illust from "../image/照り焼き.png";
-import {search} from "../utils/search";
+import { search } from "../utils/search";
 
 function Result() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -42,19 +42,63 @@ function Result() {
   });
 
   const recipes = [
-    { id: 1, name: "鶏の照り焼き", image: illust },
-    { id: 2, name: "サーモンの塩焼き", image: illust },
-    { id: 3, name: "野菜炒め", image: illust },
-    { id: 4, name: "カレーライス", image: illust },
-    { id: 5, name: "パスタカルボナーラ", image: illust },
-    { id: 6, name: "ハンバーグ", image: illust },
+    {
+      id: 1,
+      name: "鶏の照り焼き",
+      taste: "light",
+      isCheap: true,
+      isShort: true,
+      isEasy: true,
+      image: illust,
+      ingredients: [
+        { name: "鶏もも肉", amount: "400g" },
+        { name: "醤油", amount: "大さじ2" },
+        { name: "みりん", amount: "大さじ2" },
+        { name: "酒", amount: "大さじ1" },
+        { name: "砂糖", amount: "大さじ1" },
+      ],
+      tags: ["和食", "メイン", "簡単"],
+      steps: [
+        "鶏肉を一口大に切ります。",
+        "醤油、みりん、酒、砂糖を混ぜて調味料を作ります。",
+        "フライパンで鶏肉を両面焼きます。",
+        "調味料を加え、煮詰めながら照りを出します。",
+        "鶏肉に味がなじんだら完成です。",
+      ],
+    },
+    {
+      id: 2,
+      name: "ハンバーグ",
+      taste: "rich",
+      isCheap: true,
+      isShort: false,
+      isEasy: true,
+      image: illust,
+      ingredients: [
+        { name: "牛ひき肉", amount: "300g" },
+        { name: "玉ねぎ", amount: "1個" },
+        { name: "パン粉", amount: "1/2カップ" },
+        { name: "牛乳", amount: "大さじ2" },
+        { name: "卵", amount: "1個" },
+        { name: "塩", amount: "小さじ1/2" },
+        { name: "コショウ", amount: "少々" },
+      ],
+      tags: ["洋食", "メイン", "簡単"],
+      steps: [
+        "玉ねぎをみじん切りにして、炒めて冷まします。",
+        "ボウルにひき肉、玉ねぎ、パン粉、牛乳、卵、塩、コショウを入れて混ぜます。",
+        "混ぜたタネを手で形を整えて、フライパンで焼きます。",
+        "両面に焼き色がついたら、蓋をして弱火で火を通します。",
+        "ソースをかけて完成です。",
+      ],
+    },
   ];
-  const [menus, setMenus] = useState(recipes)
 
+  const [menus, setMenus] = useState(recipes);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setMenus(search(menus,searchQuery))
+    setMenus(search(menus, searchQuery));
     console.log("Searching for:", searchQuery, "with filters:", filters);
   };
 
@@ -63,17 +107,25 @@ function Result() {
       ...prev,
       [category]: {
         ...Object.keys(prev[category]).reduce((acc, key) => {
-          acc[key] = (key === filterName);
+          acc[key] = key === filterName;
           return acc;
         }, {}),
       },
     }));
   };
 
+  const handleLinkClick = (recipe) => {
+    console.log(recipe); // ここでrecipeを確認
+  };
+
   const renderFilterSection = (category, title) => (
-    <div className="mb-4 flex flex-col items-center"> {/* 中央揃えのためにflex-colとitems-centerを追加 */}
+    <div className="mb-4 flex flex-col items-center">
+      {" "}
+      {/* 中央揃えのためにflex-colとitems-centerを追加 */}
       <h4 className="font-medium text-sm mb-2">{title}</h4>
-      <div className="flex flex-wrap gap-4"> {/* フレックスボックスで1行に並べる */}
+      <div className="flex flex-wrap gap-4">
+        {" "}
+        {/* フレックスボックスで1行に並べる */}
         {Object.entries(filters[category]).map(([key, value]) => (
           <div key={key} className="flex items-center space-x-2">
             <input
@@ -94,8 +146,7 @@ function Result() {
         ))}
       </div>
     </div>
-  );  
-  
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-amber-100">
@@ -146,7 +197,15 @@ function Result() {
         <h1 className="text-2xl font-bold mb-6 text-amber-800">検索結果</h1>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {menus.map((recipe) => (
-            <Link to={`/detail/${recipe.id}`} key={recipe.id} className="group">
+            <Link
+              to={{
+                pathname: `/detail/${recipe.id}`,
+                state: { recipe },
+              }}
+              key={recipe.id}
+              onClick={() => handleLinkClick(recipe)}
+              className="group"
+            >
               <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 group-hover:scale-105">
                 <img
                   src={recipe.image}

@@ -1,64 +1,21 @@
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import App from "../App.js";
 import illust from "../image/照り焼き.png";
 import "../index.css";
+import { useState } from "react";
 
 function Detail() {
-  const params = useParams();
+  const location = useLocation();
+  const { recipe } = location.state || {};
 
-  const recipe = [
-    {
-      id: 1,
-      name: "鶏の照り焼き",
-      taste: "light",
-      isCheap: true,
-      isShort: true,
-      isEasy: true,
-      image: "../image/照り焼き.png",
-      ingredients: [
-        { name: "鶏もも肉", amount: "400g" },
-        { name: "醤油", amount: "大さじ2" },
-        { name: "みりん", amount: "大さじ2" },
-        { name: "酒", amount: "大さじ1" },
-        { name: "砂糖", amount: "大さじ1" },
-      ],
-      tags: ["和食", "メイン", "簡単"],
-      steps: [
-        "鶏肉を一口大に切ります。",
-        "醤油、みりん、酒、砂糖を混ぜて調味料を作ります。",
-        "フライパンで鶏肉を両面焼きます。",
-        "調味料を加え、煮詰めながら照りを出します。",
-        "鶏肉に味がなじんだら完成です。",
-      ],
-    },
-    {
-      id: 2,
-      name: "ハンバーグ",
-      taste: "rich",
-      isCheap: true,
-      isShort: false,
-      isEasy: true,
-      image: "../image/hamburg.png",
-      ingredients: [
-        { name: "牛ひき肉", amount: "300g" },
-        { name: "玉ねぎ", amount: "1個" },
-        { name: "パン粉", amount: "1/2カップ" },
-        { name: "牛乳", amount: "大さじ2" },
-        { name: "卵", amount: "1個" },
-        { name: "塩", amount: "小さじ1/2" },
-        { name: "コショウ", amount: "少々" },
-      ],
-      tags: ["洋食", "メイン", "簡単"],
-      steps: [
-        "玉ねぎをみじん切りにして、炒めて冷まします。",
-        "ボウルにひき肉、玉ねぎ、パン粉、牛乳、卵、塩、コショウを入れて混ぜます。",
-        "混ぜたタネを手で形を整えて、フライパンで焼きます。",
-        "両面に焼き色がついたら、蓋をして弱火で火を通します。",
-        "ソースをかけて完成です。",
-      ],
-    },
-  ];
+  console.log(recipe);
+
+  if (!recipe) {
+    return <div>Recipe not found</div>; // recipeがない場合の表示
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-100 py-12">

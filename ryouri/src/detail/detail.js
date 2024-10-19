@@ -1,4 +1,5 @@
-import { useParams } from "react-router-dom";
+import { useEffect } from 'react';
+import { useLocation, useParams } from "react-router-dom";
 import illust from "../image/teriyaki.png";
 import {recipes} from "../data/data";
 
@@ -61,6 +62,11 @@ function Detail() {
 
   // recipeIdに基づいてレシピを取得
   const recipe = recipes.find((r) => r.id === recipeId);
+
+  useEffect(() => {
+    // スクロールをトップに設定
+    window.scrollTo(0, 0);
+  }, [id]); // idが変更されるたびに実行 
 
   if (!recipe) {
     return <div>Recipe not found</div>; // recipeがない場合の表示

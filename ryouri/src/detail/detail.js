@@ -1,28 +1,21 @@
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import App from "../App.js";
 import illust from "../image/照り焼き.png";
 import "../index.css";
+import { useState } from "react";
 
 function Detail() {
-  const recipe = {
-    name: "鶏の照り焼き",
-    image: illust,
-    ingredients: [
-      "鶏もも肉 400g",
-      "醤油 大さじ2",
-      "みりん 大さじ2",
-      "酒 大さじ1",
-      "砂糖 大さじ1",
-    ],
-    tags: ["和食", "メイン", "簡単"],
-    steps: [
-      "鶏肉を一口大に切ります。",
-      "醤油、みりん、酒、砂糖を混ぜて調味料を作ります。",
-      "フライパンで鶏肉を両面焼きます。",
-      "調味料を加え、煮詰めながら照りを出します。",
-      "鶏肉に味がなじんだら完成です。",
-    ],
-  };
+  const location = useLocation();
+  const { recipe } = location.state || {};
+
+  console.log(recipe);
+
+  if (!recipe) {
+    return <div>Recipe not found</div>; // recipeがない場合の表示
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-100 py-12">

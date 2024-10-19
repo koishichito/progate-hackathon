@@ -17,6 +17,8 @@ export const recipes=[
         "isCheap": true,
         "isShort": true,
         "isEasy": true,
+        "mealType":"main",
+        "cuisine":"japanese",
         "image": teriyaki,
         "ingredients": [
             {

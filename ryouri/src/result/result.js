@@ -8,6 +8,11 @@ import illust from "../image/照り焼き.png";
 function Result() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [flavor, setFlavor] = useState(false);
+  const [cost, setCost] = useState(false);
+  const [time, setTime] = useState(false);
+  const [difficulty, setDifficulty] = useState(false);
+
   const [filters, setFilters] = useState({
     dietaryRestrictions: {
       vegetarian: false,
@@ -33,6 +38,13 @@ function Result() {
       under60: false,
     },
   });
+
+  const categories = [
+    { title: '味', options: ['甘い', '辛い', 'あっさり', 'こってり'], state: flavor, setState: setFlavor },
+    { title: '費用', options: ['安い', '高い'], state: cost, setState: setCost },
+    { title: '時間', options: ['短い', '長い'], state: time, setState: setTime },
+    { title: '難易度', options: ['簡単', '難しい'], state: difficulty, setState: setDifficulty }
+  ];
 
   const recipes = [
     { id: 1, name: "鶏の照り焼き", image: illust },

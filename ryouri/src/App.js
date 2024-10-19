@@ -57,7 +57,6 @@ function Home() {
       setSearchResults(data);
       navigate('/result', { state: { results: data } });
       // 結果を表示するためにResult componentにリダイレクトする
-      
     } catch (error) {
       console.error('Error fetching search results:', error);
     }

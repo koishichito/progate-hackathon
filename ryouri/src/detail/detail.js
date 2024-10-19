@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import illust from "../image/teriyaki.png";
-import {recipes} from "../data/data";
+import { recipes } from "../data/data";
+import { ArrowLeft } from "lucide-react";
 
 function Detail() {
   const { id } = useParams();
@@ -66,7 +67,7 @@ function Detail() {
   useEffect(() => {
     // スクロールをトップに設定
     window.scrollTo(0, 0);
-  }, [id]); // idが変更されるたびに実行 
+  }, [id]); // idが変更されるたびに実行
 
   if (!recipe) {
     return <div>Recipe not found</div>; // recipeがない場合の表示
@@ -75,6 +76,15 @@ function Detail() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-100 py-12">
       <div className="container mx-auto px-4">
+        <div className="mb-4">
+          <button
+            className="flex items-center text-amber-600 hover:text-amber-700 transition-colors duration-200"
+            onClick={() => window.history.back()}
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            <span className="text-lg">戻る</span>
+          </button>
+        </div>
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <img
             src={recipe.image}

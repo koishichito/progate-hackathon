@@ -25,11 +25,11 @@ function App() {
 function Home() {
   // 状態管理
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false)
-  const [flavor, setFlavor] = useState('あっさり')
-  const [cost, setCost] = useState('普通')
-  const [time, setTime] = useState('30分以内')
-  const [difficulty, setDifficulty] = useState('普通')
+  const [isOpen, setIsOpen] = useState(false);
+  const [flavor, setFlavor] = useState(false);
+  const [cost, setCost] = useState(false);
+  const [time, setTime] = useState(false);
+  const [difficulty, setDifficulty] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
   // カテゴリーの定義

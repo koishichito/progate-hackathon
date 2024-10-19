@@ -1,13 +1,11 @@
-// import {menuList} from "../data/ryouri";
-
-export const search=(searchWord)=>{
-    const menus=menuList
+export const search=(recipes,searchWord)=>{
+    const menus=recipes
     if(!searchWord){
         return menus
     }
     const changedWord=hiraToKana(searchWord)
 
-    return menus.filter((menu)=>hiraToKana(menu.name).includes(changedWord)||menu.ingredients.find((ingredient)=>ingredient.name.includes(searchWord)))
+    return menus.filter((menu)=>hiraToKana(menu.name).includes(changedWord))
 }
 
 function hiraToKana(word){

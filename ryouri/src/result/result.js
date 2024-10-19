@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { useState } from "react";
 import { Search, Filter } from "lucide-react";
 import illust from "../image/照り焼き.png";
+import {search} from "../utils/search";
 
 function Result() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -48,9 +49,12 @@ function Result() {
     { id: 5, name: "パスタカルボナーラ", image: illust },
     { id: 6, name: "ハンバーグ", image: illust },
   ];
+  const [menus, setMenus] = useState(recipes)
+
 
   const handleSearch = (e) => {
     e.preventDefault();
+    setMenus(search(menus,searchQuery))
     console.log("Searching for:", searchQuery, "with filters:", filters);
   };
 
@@ -141,7 +145,7 @@ function Result() {
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-6 text-amber-800">検索結果</h1>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {recipes.map((recipe) => (
+          {menus.map((recipe) => (
             <Link to={`/detail/${recipe.id}`} key={recipe.id} className="group">
               <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 group-hover:scale-105">
                 <img

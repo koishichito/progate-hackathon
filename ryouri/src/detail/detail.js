@@ -69,9 +69,6 @@ function Detail() {
                 <ol className="list-decimal list-inside space-y-4 text-blue-700">
                   {recipe.steps.map((step, index) => (
                     <li key={index} className="pl-2">
-                      <span className="font-medium text-blue-900">
-                        手順 {index + 1}:
-                      </span>{" "}
                       {step}
                     </li>
                   ))}

@@ -4,6 +4,7 @@ import { Search, Filter } from "lucide-react";
 import illust from "../image/照り焼き.png";
 import { search } from "../utils/search";
 import {recipes} from "../data/data";
+import {menuFilter} from "../utils/filter";
 
 function Result() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -103,6 +104,9 @@ function Result() {
     console.log("Searching for:", searchQuery, "with filters:", filters);
   };
 
+  const [torioFilters, setTorioFilters] = useState({taste:null,isCheap:null,isShort:null,isEasy:null,mealType:null,cuisine:null})
+  // const meal=menuFilter(menus,filters.taste,filters.isCheap,filters.isShort,filters.isEasy,filters.mealType,filters.cuisine)
+
   const handleFilterChange = (category, filterName) => {
     setFilters((prev) => ({
       ...prev,
@@ -113,6 +117,7 @@ function Result() {
         }, {}),
       },
     }));
+    console.log("filtersの中身",filters)
   };
 
   const handleLinkClick = (recipe) => {
@@ -127,24 +132,29 @@ function Result() {
       <div className="flex flex-wrap gap-4">
         {" "}
         {/* フレックスボックスで1行に並べる */}
-        {Object.entries(filters[category]).map(([key, value]) => (
-          <div key={key} className="flex items-center space-x-2">
-            <input
-              type="radio"
-              name={category}
-              id={`${category}-${key}`}
-              checked={value}
-              onChange={() => handleFilterChange(category, key)}
-              className="rounded border-gray-300 text-amber-500 focus:ring-amber-500"
-            />
-            <label
-              htmlFor={`${category}-${key}`}
-              className="text-sm leading-none"
-            >
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </label>
-          </div>
-        ))}
+        {Object.entries(filters[category]).map(([key, value]) => {
+          console.log("key",key)
+          console.log("value",value)
+              return(
+                  <div key={key} className="flex items-center space-x-2">
+                    <input
+                        type="radio"
+                        name={category}
+                        id={`${category}-${key}`}
+                        checked={value}
+                        onChange={() => handleFilterChange(category, key)}
+                        className="rounded border-gray-300 text-amber-500 focus:ring-amber-500"
+                    />
+                    <label
+                        htmlFor={`${category}-${key}`}
+                        className="text-sm leading-none"
+                    >
+                      {key.charAt(0).toUpperCase() + key.slice(1)}
+                    </label>
+                  </div>
+              )
+            }
+        )}
       </div>
     </div>
   );

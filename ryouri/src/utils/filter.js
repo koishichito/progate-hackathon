@@ -7,14 +7,14 @@
 //     isShort: boolean|null,
 //     isEasy: boolean|null
 //     mealType:"staple"|"main"|"side"|"soup"|null
-//     genre:"japanese"|"western"|"chinese"|"italian"|null
+//     cuisine:"japanese"|"western"|"chinese"|"italian"|null
 // }
 
-export const menuFilter = ({menus,taste, isCheap, isShort, isEasy,mealType,genre}) => {
+export const menuFilter = ({menus,taste, isCheap, isShort, isEasy,mealType,cuisine}) => {
     let filteredMenus
     filteredMenus=filterFourChoices(menus,"taste",taste)
     filteredMenus=filterFourChoices(filteredMenus,"mealType",mealType)
-    filteredMenus=filterFourChoices(filteredMenus,"genre",genre)
+    filteredMenus=filterFourChoices(filteredMenus,"cuisine",cuisine)
     filteredMenus=filterMenus(filteredMenus,isCheap,"isCheap")
     filteredMenus=filterMenus(filteredMenus,isShort,"isShort")
     return filterMenus(filteredMenus,isEasy,"isEasy")

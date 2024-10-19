@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Detail from "./detail/detail.js";
 import Result from "./result/result.js";
+import { useNavigate } from 'react-router-dom';
 
 
 function App() {
@@ -23,11 +24,13 @@ function App() {
 
 function Home() {
   // 状態管理
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false)
   const [flavor, setFlavor] = useState('あっさり')
   const [cost, setCost] = useState('普通')
   const [time, setTime] = useState('30分以内')
   const [difficulty, setDifficulty] = useState('普通')
+  const [searchResults, setSearchResults] = useState([]);
 
   // カテゴリーの定義
   const categories = [
@@ -36,6 +39,29 @@ function Home() {
     { title: '時間', options: ['短い', '長い'], state: time, setState: setTime },
     { title: '難易度', options: ['簡単', '難しい'], state: difficulty, setState: setDifficulty }
   ]
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    console.log('handleSearch function called');  // この行を追加
+    const searchQuery = e.target.elements.search.value;
+    const selectedTags = [flavor, cost, time, difficulty].filter(tag => tag !== '普通').join(',');
+    console.log('Search query:', searchQuery);  // この行を追加
+    console.log('Selected tags:', selectedTags);  // この行を追��
+
+    try {
+      console.log('Sending request to:', `http://localhost:3000/search?query=${encodeURIComponent(searchQuery)}&tags=${encodeURIComponent(selectedTags)}`);  // この行を追加
+      const response = await fetch(`http://localhost:3000/search?query=${encodeURIComponent(searchQuery)}&tags=${encodeURIComponent(selectedTags)}`);
+      console.log('Response received:', response);  // この行を追加
+      const data = await response.json();
+      console.log('Data received:', data);  // この行を追加
+      setSearchResults(data);
+      navigate('/result', { state: { results: data } });
+      // 結果を表示するためにResult componentにリダイレクトする
+      
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-100 to-red-100 flex flex-col items-center justify-center p-4">
@@ -47,9 +73,10 @@ function Home() {
         </div>
         <div className="space-y-4 w-full max-w-md mx-auto">
           {/* 検索バー */}
-          <div className="flex items-center justify-center space-x-4">
+          <form onSubmit={handleSearch} className="flex items-center justify-center space-x-4">
             <div className="relative flex-grow">
               <input
+                name="search"
                 className="w-full pl-10 pr-4 py-2 text-base rounded-full border-2 border-orange-300 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-opacity-50"
                 placeholder="料理名や食材を検索..."
                 type="search"
@@ -65,6 +92,7 @@ function Home() {
               </svg>
             </div>
             <button
+              type="submit"
               className="bg-orange-500 hover:bg-orange-600 text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-opacity-50"
               aria-label="検索"
             >
@@ -78,7 +106,7 @@ function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </button>
-          </div>
+          </form>
           {/* 詳細検索 */}
           <div className="w-full">
             <button
@@ -216,3 +244,9 @@ export default App;
 //     </div>
 //   );
 // }
+
+
+
+
+
+

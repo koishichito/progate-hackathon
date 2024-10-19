@@ -18,7 +18,9 @@ const routes = require('./routes');             // routes/index.jsを参照
 const sequelize = require('./models');          // models/index.jsを参照
 const Recipe = require('./models/recipe');      // models/recipe.jsを参照
 
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://localhost:3001']
+}));
 app.use(bodyParser.json());
 app.use('/', routes);
 

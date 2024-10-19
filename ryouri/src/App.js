@@ -25,11 +25,11 @@ function App() {
 function Home() {
   // 状態管理
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false)
-  const [flavor, setFlavor] = useState('あっさり')
-  const [cost, setCost] = useState('普通')
-  const [time, setTime] = useState('30分以内')
-  const [difficulty, setDifficulty] = useState('普通')
+  const [isOpen, setIsOpen] = useState(false);
+  const [flavor, setFlavor] = useState(false);
+  const [cost, setCost] = useState(false);
+  const [time, setTime] = useState(false);
+  const [difficulty, setDifficulty] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
   // カテゴリーの定義
@@ -40,13 +40,14 @@ function Home() {
     { title: '難易度', options: ['簡単', '難しい'], state: difficulty, setState: setDifficulty }
   ]
 
+  // 検索用の関数
   const handleSearch = async (e) => {
     e.preventDefault();
     console.log('handleSearch function called');  // この行を追加
     const searchQuery = e.target.elements.search.value;
     const selectedTags = [flavor, cost, time, difficulty].filter(tag => tag !== '普通').join(',');
     console.log('Search query:', searchQuery);  // この行を追加
-    console.log('Selected tags:', selectedTags);  // この行を追��
+    console.log('Selected tags:', selectedTags);  // この行を追加
 
     try {
       console.log('Sending request to:', `http://localhost:3000/search?query=${encodeURIComponent(searchQuery)}&tags=${encodeURIComponent(selectedTags)}`);  // この行を追加
@@ -91,7 +92,7 @@ function Home() {
               </svg>
             </div>
             <button
-              type="submit"
+              type="submit" // フォーム送信ボタンとして設定
               className="bg-orange-500 hover:bg-orange-600 text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-opacity-50"
               aria-label="検索"
             >

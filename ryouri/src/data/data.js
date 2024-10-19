@@ -1,3 +1,14 @@
+import teriyaki from "../image/teriyaki.png";
+import hamburg from "../image/hamburg.png";
+import curry from "../image/curry.png";
+import stew from "../image/stew.png";
+import omeletRice from "../image/omelet_rice.png";
+import karaage from "../image/karaage.png";
+import oyakodon from "../image/oyakodon.png";
+import yakisoba from "../image/yakisoba.png";
+import grilledSalmon from "../image/grilled_salmon.png";
+import tonjiru from "../image/tonjiru.png";
+
 export const recipes=[
     {
         "id": 1,
@@ -6,7 +17,7 @@ export const recipes=[
         "isCheap": true,
         "isShort": true,
         "isEasy": true,
-        "image": "../image/照り焼き.png",
+        "image": teriyaki,
         "ingredients": [
             {
                 "name": "鶏もも肉",
@@ -49,7 +60,7 @@ export const recipes=[
         "isCheap": true,
         "isShort": false,
         "isEasy": true,
-        "image": "../image/hamburg.png",
+        "image": hamburg,
         "ingredients": [
             {
                 "name": "牛ひき肉",
@@ -100,7 +111,7 @@ export const recipes=[
         "isCheap": true,
         "isShort": false,
         "isEasy": true,
-        "image": "../image/curry.png",
+        "image": curry,
         "ingredients": [
             {
                 "name": "カレールー",
@@ -147,7 +158,7 @@ export const recipes=[
         "isCheap": false,
         "isShort": false,
         "isEasy": true,
-        "image": "../image/stew.png",
+        "image": stew,
         "ingredients": [
             {
                 "name": "シチュールー",
@@ -198,7 +209,7 @@ export const recipes=[
         "isCheap": true,
         "isShort": true,
         "isEasy": true,
-        "image": "../image/omelet_rice.png",
+        "image": omeletRice,
         "ingredients": [
             {
                 "name": "鶏もも肉",
@@ -253,7 +264,7 @@ export const recipes=[
         "isCheap": true,
         "isShort": false,
         "isEasy": true,
-        "image": "../image/karaage.png",
+        "image": karaage,
         "ingredients": [
             {
                 "name": "鶏もも肉",
@@ -302,7 +313,7 @@ export const recipes=[
         "isCheap": true,
         "isShort": true,
         "isEasy": true,
-        "image": "../image/oyakodon.png",
+        "image": oyakodon,
         "ingredients": [
             {
                 "name": "鶏もも肉",
@@ -352,7 +363,7 @@ export const recipes=[
         "isCheap": true,
         "isShort": true,
         "isEasy": true,
-        "image": "../image/yakisoba.png",
+        "image": yakisoba,
         "ingredients": [
             {
                 "name": "焼きそば麺",
@@ -398,7 +409,7 @@ export const recipes=[
         "isCheap": false,
         "isShort": true,
         "isEasy": true,
-        "image": "../image/grilled_salmon.png",
+        "image": grilledSalmon,
         "ingredients": [
             {
                 "name": "鮭の切り身",
@@ -427,7 +438,7 @@ export const recipes=[
         "isCheap": true,
         "isShort": false,
         "isEasy": true,
-        "image": "../image/tonjiru.png",
+        "image": tonjiru,
         "ingredients": [
             {
                 "name": "豚バラ肉",

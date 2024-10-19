@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { useState } from "react";
 import { Search, Filter } from "lucide-react";
-import illust from "../image/照り焼き.png";
+import illust from "../image/teriyaki.png";
 import { search } from "../utils/search";
 import {recipes} from "../data/data";
 

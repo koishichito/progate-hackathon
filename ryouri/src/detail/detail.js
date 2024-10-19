@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import illust from "../image/照り焼き.png";
+import illust from "../image/teriyaki.png";
 import {recipes} from "../data/data";
 
 function Detail() {

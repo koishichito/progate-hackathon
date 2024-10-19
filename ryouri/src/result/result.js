@@ -1,36 +1,43 @@
-"use client";
-
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { useState } from "react";
-import { Search, Filter, X } from "lucide-react";
+import { Search, Filter } from "lucide-react";
 import illust from "../image/照り焼き.png";
+import {search} from "../utils/search";
 
 function Result() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   const [filters, setFilters] = useState({
-    dietaryRestrictions: {
-      vegetarian: false,
-      vegan: false,
-      glutenFree: false,
-      dairyFree: false,
+    taste: {
+      甘い: false,
+      辛い: false,
+      あっさり: false,
+      こってり: false,
+    },
+    isCheap: {
+      安い: false,
+      高い: false,
+    },
+    isShort: {
+      短い: false,
+      長い: false,
+    },
+    isEasy: {
+      簡単: false,
+      難しい: false,
     },
     mealType: {
-      breakfast: false,
-      lunch: false,
-      dinner: false,
-      snack: false,
+      主食: false,
+      主菜: false,
+      副菜: false,
+      汁物: false,
     },
     cuisine: {
-      japanese: false,
-      italian: false,
-      chinese: false,
-      indian: false,
-    },
-    cookingTime: {
-      under15: false,
-      under30: false,
-      under60: false,
+      和食: false,
+      洋食: false,
+      中華: false,
+      イタリアン: false,
     },
   });
 
@@ -42,9 +49,12 @@ function Result() {
     { id: 5, name: "パスタカルボナーラ", image: illust },
     { id: 6, name: "ハンバーグ", image: illust },
   ];
+  const [menus, setMenus] = useState(recipes)
+
 
   const handleSearch = (e) => {
     e.preventDefault();
+    setMenus(search(menus,searchQuery))
     console.log("Searching for:", searchQuery, "with filters:", filters);
   };
 
@@ -52,20 +62,23 @@ function Result() {
     setFilters((prev) => ({
       ...prev,
       [category]: {
-        ...prev[category],
-        [filterName]: !prev[category][filterName],
+        ...Object.keys(prev[category]).reduce((acc, key) => {
+          acc[key] = (key === filterName);
+          return acc;
+        }, {}),
       },
     }));
   };
 
   const renderFilterSection = (category, title) => (
-    <div>
+    <div className="mb-4 flex flex-col items-center"> {/* 中央揃えのためにflex-colとitems-centerを追加 */}
       <h4 className="font-medium text-sm mb-2">{title}</h4>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="flex flex-wrap gap-4"> {/* フレックスボックスで1行に並べる */}
         {Object.entries(filters[category]).map(([key, value]) => (
           <div key={key} className="flex items-center space-x-2">
             <input
-              type="checkbox"
+              type="radio"
+              name={category}
               id={`${category}-${key}`}
               checked={value}
               onChange={() => handleFilterChange(category, key)}
@@ -81,7 +94,8 @@ function Result() {
         ))}
       </div>
     </div>
-  );
+  );  
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-amber-100">
@@ -104,19 +118,34 @@ function Result() {
             </button>
             <button
               type="button"
-              onClick={() => setIsFilterOpen(true)}
+              onClick={() => setIsFilterOpen(!isFilterOpen)} // 開閉状態をトグル
               className="bg-white hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-md border border-gray-300 flex items-center"
             >
               <Filter className="h-4 w-4 mr-2" />
               フィルター
             </button>
           </form>
+          {isFilterOpen && ( // フィルターセクションを表示
+            <div className="mt-4 p-4 bg-gray-100 rounded-md">
+              {renderFilterSection("taste", "味")}
+              <hr className="my-2 border-gray-200" />
+              {renderFilterSection("isCheap", "費用")}
+              <hr className="my-2 border-gray-200" />
+              {renderFilterSection("isShort", "時間")}
+              <hr className="my-2 border-gray-200" />
+              {renderFilterSection("isEasy", "難易度")}
+              <hr className="my-2 border-gray-200" />
+              {renderFilterSection("mealType", "食事タイプ")}
+              <hr className="my-2 border-gray-200" />
+              {renderFilterSection("cuisine", "料理のジャンル")}
+            </div>
+          )}
         </div>
       </header>
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-6 text-amber-800">検索結果</h1>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {recipes.map((recipe) => (
+          {menus.map((recipe) => (
             <Link to={`/detail/${recipe.id}`} key={recipe.id} className="group">
               <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 group-hover:scale-105">
                 <img
@@ -136,30 +165,6 @@ function Result() {
           ))}
         </div>
       </main>
-      {isFilterOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-80 max-h-[80vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="font-medium text-lg">フィルター</h3>
-              <button
-                onClick={() => setIsFilterOpen(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-            <div className="space-y-4">
-              {renderFilterSection("dietaryRestrictions", "食事制限")}
-              <hr className="my-2 border-gray-200" />
-              {renderFilterSection("mealType", "食事タイプ")}
-              <hr className="my-2 border-gray-200" />
-              {renderFilterSection("cuisine", "料理のジャンル")}
-              <hr className="my-2 border-gray-200" />
-              {renderFilterSection("cookingTime", "調理時間")}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -1,163 +1,143 @@
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-import { useState } from "react";
+import {Link } from "react-router-dom";
+import {useEffect, useState} from "react";
 import { Search, Filter } from "lucide-react";
-import illust from "../image/teriyaki.png";
 import { search } from "../utils/search";
 import {recipes} from "../data/data";
+import React from "react";
 import {menuFilter} from "../utils/filter";
 
 function Result() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [taste, setTaste] = useState(null);
+  const [isCheap, setIsCheap] = useState(null);
+  const [isShort, setIsShort] = useState(null);
+  const [isEasy, setIsEasy] = useState(null);
+  const [mealType, setMealType] = useState(null);
+  const [cuisine, setCuisine] = useState(null);
 
-  const [filters, setFilters] = useState({
-    taste: {
-      甘い: false,
-      辛い: false,
-      あっさり: false,
-      こってり: false,
-    },
-    isCheap: {
-      安い: false,
-      高い: false,
-    },
-    isShort: {
-      短い: false,
-      長い: false,
-    },
-    isEasy: {
-      簡単: false,
-      難しい: false,
-    },
-    mealType: {
-      主食: false,
-      主菜: false,
-      副菜: false,
-      汁物: false,
-    },
-    cuisine: {
-      和食: false,
-      洋食: false,
-      中華: false,
-      イタリアン: false,
-    },
-  });
 
-  // const recipes = [
-  //   {
-  //     id: 1,
-  //     name: "鶏の照り焼き",
-  //     taste: "light",
-  //     isCheap: true,
-  //     isShort: true,
-  //     isEasy: true,
-  //     image: illust,
-  //     ingredients: [
-  //       { name: "鶏もも肉", amount: "400g" },
-  //       { name: "醤油", amount: "大さじ2" },
-  //       { name: "みりん", amount: "大さじ2" },
-  //       { name: "酒", amount: "大さじ1" },
-  //       { name: "砂糖", amount: "大さじ1" },
-  //     ],
-  //     tags: ["和食", "メイン", "簡単"],
-  //     steps: [
-  //       "鶏肉を一口大に切ります。",
-  //       "醤油、みりん、酒、砂糖を混ぜて調味料を作ります。",
-  //       "フライパンで鶏肉を両面焼きます。",
-  //       "調味料を加え、煮詰めながら照りを出します。",
-  //       "鶏肉に味がなじんだら完成です。",
-  //     ],
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "ハンバーグ",
-  //     taste: "rich",
-  //     isCheap: true,
-  //     isShort: false,
-  //     isEasy: true,
-  //     image: illust,
-  //     ingredients: [
-  //       { name: "牛ひき肉", amount: "300g" },
-  //       { name: "玉ねぎ", amount: "1個" },
-  //       { name: "パン粉", amount: "1/2カップ" },
-  //       { name: "牛乳", amount: "大さじ2" },
-  //       { name: "卵", amount: "1個" },
-  //       { name: "塩", amount: "小さじ1/2" },
-  //       { name: "コショウ", amount: "少々" },
-  //     ],
-  //     tags: ["洋食", "メイン", "簡単"],
-  //     steps: [
-  //       "玉ねぎをみじん切りにして、炒めて冷まします。",
-  //       "ボウルにひき肉、玉ねぎ、パン粉、牛乳、卵、塩、コショウを入れて混ぜます。",
-  //       "混ぜたタネを手で形を整えて、フライパンで焼きます。",
-  //       "両面に焼き色がついたら、蓋をして弱火で火を通します。",
-  //       "ソースをかけて完成です。",
-  //     ],
-  //   },
-  // ];
+
+  const FilterInput = ({ name, id,state, setState, tag }) => (
+      <div className="flex items-center space-x-2">
+        <input
+            type="radio"
+            name={name}
+            id={id}
+            value={id}
+            checked={id===state}
+            onChange={(e) => setState(e.target.value)}
+            className="rounded border-gray-300 text-amber-500 focus:ring-amber-500"
+        />
+        <label htmlFor={id} className="text-sm leading-none">
+          {tag}
+        </label>
+      </div>
+  );
+
+  const FilterSection = ({ title, name, options,state, setState }) => (
+      <div className="mb-4 flex flex-col items-center">
+        <h4 className="font-medium text-sm mb-2">{title}</h4>
+        <div className="flex flex-wrap gap-4">
+          {options.map(({ id, tag }) => (
+              <FilterInput
+                  key={id}
+                  name={name}
+                  id={id}
+                  state={state}
+                  setState={setState}
+                  tag={tag}
+              />
+          ))}
+        </div>
+      </div>
+  );
+
+
+  const filterSections = [
+    {
+      title: '味',
+      name: 'taste',
+      options: [
+        { id: 'sweet', tag: '甘い' },
+        { id: 'spicy', tag: '辛い' },
+        { id: 'light', tag: 'あっさり' },
+        { id: 'rich', tag: 'こってり' },
+      ],
+      state:taste,
+      setState: setTaste,
+    },
+    {
+      title: '費用',
+      name: 'isCheap',
+      options: [
+        { id: 'cheap', tag: '安い' },
+        { id: 'expensive', tag: '高い' },
+      ],
+      state:isCheap,
+      setState: setIsCheap,
+    },
+    {
+      title: '時間',
+      name: 'isShort',
+      options: [
+        { id: 'short', tag: '短い' },
+        { id: 'long', tag: '長い' },
+      ],
+      state:isShort,
+      setState: setIsShort,
+    },
+    {
+      title: '難易度',
+      name: 'isEasy',
+      options: [
+        { id: 'easy', tag: '簡単' },
+        { id: 'difficult', tag: '難しい' },
+      ],
+      state:isEasy,
+      setState: setIsEasy,
+    },
+    {
+      title: '食事タイプ',
+      name: 'mealType',
+      options: [
+        { id: 'staple', tag: '主食' },
+        { id: 'main', tag: '主菜' },
+        { id: 'side', tag: '副菜' },
+        { id: 'soup', tag: '汁物' },
+      ],
+      state:mealType,
+      setState: setMealType,
+    },
+    {
+      title: '料理のジャンル',
+      name: 'cuisine',
+      options: [
+        { id: 'japanese', tag: '和食' },
+        { id: 'western', tag: '洋食' },
+        { id: 'chinese', tag: '中華' },
+        { id: 'italian', tag: 'イタリアン' },
+      ],
+      state:cuisine,
+      setState: setCuisine,
+    },
+  ];
 
   const [menus, setMenus] = useState(recipes);
-
+  useEffect(() => {
+    const filteredMenus=menuFilter(recipes,taste,isCheap,isShort,isEasy,mealType,cuisine)
+    setMenus(filteredMenus)
+  }, [taste,isCheap,isShort,isEasy,mealType,cuisine]);
   const handleSearch = (e) => {
     e.preventDefault();
     setMenus(search(menus, searchQuery));
-    console.log("Searching for:", searchQuery, "with filters:", filters);
-  };
-
-  const [torioFilters, setTorioFilters] = useState({taste:null,isCheap:null,isShort:null,isEasy:null,mealType:null,cuisine:null})
-  // const meal=menuFilter(menus,filters.taste,filters.isCheap,filters.isShort,filters.isEasy,filters.mealType,filters.cuisine)
-
-  const handleFilterChange = (category, filterName) => {
-    setFilters((prev) => ({
-      ...prev,
-      [category]: {
-        ...Object.keys(prev[category]).reduce((acc, key) => {
-          acc[key] = key === filterName;
-          return acc;
-        }, {}),
-      },
-    }));
-    console.log("filtersの中身",filters)
+    console.log("Searching for:", searchQuery, "with filters:", );
   };
 
   const handleLinkClick = (recipe) => {
     console.log(recipe); // ここでrecipeを確認
   };
 
-  const renderFilterSection = (category, title) => (
-    <div className="mb-4 flex flex-col items-center">
-      {" "}
-      {/* 中央揃えのためにflex-colとitems-centerを追加 */}
-      <h4 className="font-medium text-sm mb-2">{title}</h4>
-      <div className="flex flex-wrap gap-4">
-        {" "}
-        {/* フレックスボックスで1行に並べる */}
-        {Object.entries(filters[category]).map(([key, value]) => {
-          console.log("key",key)
-          console.log("value",value)
-              return(
-                  <div key={key} className="flex items-center space-x-2">
-                    <input
-                        type="radio"
-                        name={category}
-                        id={`${category}-${key}`}
-                        checked={value}
-                        onChange={() => handleFilterChange(category, key)}
-                        className="rounded border-gray-300 text-amber-500 focus:ring-amber-500"
-                    />
-                    <label
-                        htmlFor={`${category}-${key}`}
-                        className="text-sm leading-none"
-                    >
-                      {key.charAt(0).toUpperCase() + key.slice(1)}
-                    </label>
-                  </div>
-              )
-            }
-        )}
-      </div>
-    </div>
-  );
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-amber-100">
@@ -189,17 +169,14 @@ function Result() {
           </form>
           {isFilterOpen && ( // フィルターセクションを表示
             <div className="mt-4 p-4 bg-gray-100 rounded-md">
-              {renderFilterSection("taste", "味")}
-              <hr className="my-2 border-gray-200" />
-              {renderFilterSection("isCheap", "費用")}
-              <hr className="my-2 border-gray-200" />
-              {renderFilterSection("isShort", "時間")}
-              <hr className="my-2 border-gray-200" />
-              {renderFilterSection("isEasy", "難易度")}
-              <hr className="my-2 border-gray-200" />
-              {renderFilterSection("mealType", "食事タイプ")}
-              <hr className="my-2 border-gray-200" />
-              {renderFilterSection("cuisine", "料理のジャンル")}
+              {filterSections.map((section, index) => (
+                  <React.Fragment key={section.name}>
+                    <FilterSection {...section} />
+                    {index < filterSections.length - 1 && (
+                        <hr className="my-2 border-gray-200" />
+                    )}
+                  </React.Fragment>
+              ))}
             </div>
           )}
         </div>

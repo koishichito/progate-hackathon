@@ -10,20 +10,31 @@
 //     cuisine:"japanese"|"western"|"chinese"|"italian"|null
 // }
 
-export const menuFilter = ({menus,taste, isCheap, isShort, isEasy,mealType,cuisine}) => {
-    let filteredMenus
-    filteredMenus=filterFourChoices(menus,"taste",taste)
-    filteredMenus=filterFourChoices(filteredMenus,"mealType",mealType)
-    filteredMenus=filterFourChoices(filteredMenus,"cuisine",cuisine)
+export const menuFilter = (menus,taste,isCheap,isShort,isEasy,mealType,cuisine) => {
+    let filteredMenus=menus
+    console.log(filteredMenus)
+    filteredMenus=filterTaste(menus,taste)
     filteredMenus=filterMenus(filteredMenus,isCheap,"isCheap")
     filteredMenus=filterMenus(filteredMenus,isShort,"isShort")
-    return filterMenus(filteredMenus,isEasy,"isEasy")
+    filteredMenus=filterMenus(filteredMenus,isEasy,"isEasy")
+    filteredMenus=filterMealType(filteredMenus,mealType)
+    return filterCuisine(filteredMenus,cuisine)
 }
+
 
 const filterFourChoices=(menus,item,value)=>{
     return value===null?menus:menus.filter(menu=>menu[item]===value)
 }
 
+const filterMealType=(menus,value)=>{
+    return value===null?menus:menus.filter(menu=>menu.mealType===value)
+}
+const filterTaste=(menus,value)=>{
+    return value===null?menus:menus.filter(menu=>menu.taste===value)
+}
+const filterCuisine=(menus,value)=>{
+    return value===null?menus:menus.filter(menu=>menu.cuisine===value)
+}
 
 const filterMenus=(cookingList,value,listItem)=>{
     if (value===null){

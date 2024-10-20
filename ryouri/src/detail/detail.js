@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import illust from "../image/teriyaki.png";
+import { useParams } from "react-router-dom";
 import { recipes } from "../data/data";
 import { ArrowLeft } from "lucide-react";
 

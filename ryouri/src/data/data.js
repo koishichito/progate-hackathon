@@ -8,6 +8,9 @@ import oyakodon from "../image/oyakodon.png";
 import yakisoba from "../image/yakisoba.png";
 import grilledSalmon from "../image/grilled_salmon.png";
 import tonjiru from "../image/tonjiru.png";
+import mabodoufu from "../image/food_mabo_doufu.png";
+import pizza from "../image/pizza_margherita.png"
+import tsukemono from "../image/food_tsukemono_kyuuri.png";
 
 export const recipes=[
     {
@@ -63,6 +66,8 @@ export const recipes=[
         "isCheap": true,
         "isShort": false,
         "isEasy": true,
+        "mealType":"main",
+        "cuisine":"western",
         "image": hamburg,
         "ingredients": [
             {
@@ -115,6 +120,8 @@ export const recipes=[
         "isCheap": true,
         "isShort": false,
         "isEasy": true,
+        "mealType":"main",
+        "cuisine":"japanese",
         "image": curry,
         "ingredients": [
             {
@@ -164,6 +171,8 @@ export const recipes=[
         "isCheap": false,
         "isShort": false,
         "isEasy": true,
+        "mealType":"main",
+        "cuisine":"western",
         "image": stew,
         "ingredients": [
             {
@@ -217,6 +226,8 @@ export const recipes=[
         "isCheap": true,
         "isShort": true,
         "isEasy": true,
+        "mealType":"main",
+        "cuisine":"western",
         "image": omeletRice,
         "ingredients": [
             {
@@ -273,6 +284,8 @@ export const recipes=[
         "isCheap": true,
         "isShort": false,
         "isEasy": true,
+        "mealType":"main",
+        "cuisine":"japanese",
         "image": karaage,
         "ingredients": [
             {
@@ -322,6 +335,8 @@ export const recipes=[
         "isCheap": true,
         "isShort": true,
         "isEasy": true,
+        "mealType":"main",
+        "cuisine":"japanese",
         "image": oyakodon,
         "ingredients": [
             {
@@ -374,6 +389,8 @@ export const recipes=[
         "isShort": true,
         "isEasy": true,
         "image": yakisoba,
+        "mealType":"main",
+        "cuisine":"japanese",
         "ingredients": [
             {
                 "name": "焼きそば麺",
@@ -421,6 +438,8 @@ export const recipes=[
         "isCheap": false,
         "isShort": true,
         "isEasy": true,
+        "mealType":"main",
+        "cuisine":"japanese",
         "image": grilledSalmon,
         "ingredients": [
             {
@@ -451,6 +470,8 @@ export const recipes=[
         "isCheap": true,
         "isShort": false,
         "isEasy": true,
+        "mealType":"soup",
+        "cuisine":"japanese",
         "image": tonjiru,
         "ingredients": [
             {
@@ -487,6 +508,154 @@ export const recipes=[
             "鍋で豚肉を炒め、出汁を加えて野菜を煮ます。",
             "野菜が柔らかくなったら味噌を溶き入れます。",
             "煮立たせずに火を止めて完成です。"
+        ]
+    },
+    {
+        "id": 11,
+        "name": "麻婆豆腐",
+        "taste": "spicy",
+        "isCheap": true,
+        "isShort": true,
+        "isEasy": true,
+        "menuType":"main",
+        "cuisine":"chinese",
+        "image": mabodoufu,
+        "ingredients": [
+            {
+                "name": "絹ごし豆腐",
+                "amount": "1丁"
+            },
+            {
+                "name": "豚ひき肉",
+                "amount": "150g"
+            },
+            {
+                "name": "ねぎ",
+                "amount": "1/2本"
+            },
+            {
+                "name": "豆板醤",
+                "amount": "小さじ1"
+            },
+            {
+                "name": "甜麺醤",
+                "amount": "大さじ1"
+            },
+            {
+                "name": "醤油",
+                "amount": "大さじ1"
+            },
+            {
+                "name": "酒",
+                "amount": "大さじ1"
+            },
+            {
+                "name": "片栗粉",
+                "amount": "小さじ1"
+            }
+        ],
+        "tags": [
+            "中華",
+            "メイン",
+            "豆腐料理"
+        ],
+        "steps": [
+            "豆腐を一口大に切り、湯通しして水を切ります。",
+            "フライパンでひき肉を炒め、豆板醤と甜麺醤を加えます。",
+            "豆腐を入れ、酒と醤油で味を整えます。",
+            "片栗粉を水で溶いて加え、とろみをつけたら完成です。"
+        ]
+    },
+    {
+        "id": 12,
+        "name": "マルゲリータピザ",
+        "taste": "light",
+        "isCheap": false,
+        "isShort": false,
+        "isEasy": false,
+        "mealType":"staple",
+        "cuisine":"italian",
+        "image": pizza,
+        "ingredients": [
+            {
+                "name": "ピザ生地",
+                "amount": "1枚"
+            },
+            {
+                "name": "トマトソース",
+                "amount": "大さじ4"
+            },
+            {
+                "name": "モッツァレラチーズ",
+                "amount": "100g"
+            },
+            {
+                "name": "バジルの葉",
+                "amount": "適量"
+            },
+            {
+                "name": "オリーブオイル",
+                "amount": "大さじ1"
+            }
+        ],
+        "tags": [
+            "イタリアン",
+            "ピザ",
+            "メイン"
+        ],
+        "steps": [
+            "ピザ生地にトマトソースを塗ります。",
+            "モッツァレラチーズをのせ、オリーブオイルを少し振りかけます。",
+            "250℃のオーブンで10分焼きます。",
+            "焼き上がったらバジルの葉を散らして完成です。"
+        ]
+    },
+    {
+        "id": 13,
+        "name": "きゅうりの漬物",
+        "taste": "light",
+        "isCheap": true,
+        "isShort": true,
+        "isEasy": true,
+        "mealType":"side",
+        "cuisine":"chinese",
+        "image": tsukemono,
+        "ingredients": [
+            {
+                "name": "きゅうり",
+                "amount": "2本"
+            },
+            {
+                "name": "塩",
+                "amount": "小さじ1"
+            },
+            {
+                "name": "昆布",
+                "amount": "少々"
+            },
+            {
+                "name": "鷹の爪",
+                "amount": "1本"
+            },
+            {
+                "name": "酢",
+                "amount": "大さじ2"
+            },
+            {
+                "name": "砂糖",
+                "amount": "大さじ1"
+            }
+        ],
+        "tags": [
+            "中華",
+            "副菜",
+            "漬物"
+        ],
+        "steps": [
+            "きゅうりを縦半分に切り、食べやすい大きさにします。",
+            "塩をふり、軽くもんで水分を出し、余分な水分を拭き取ります。",
+            "保存袋に昆布、鷹の爪、酢、砂糖を入れ、きゅうりと一緒に漬け込みます。",
+            "冷蔵庫で1〜2時間漬け込み、味がなじんだら完成です。"
         ]
     }
 ]

@@ -1,10 +1,10 @@
-import {Link } from "react-router-dom";
-import {useEffect, useState} from "react";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Search, Filter } from "lucide-react";
 import { search } from "../utils/search";
-import {recipes} from "../data/data";
+import { recipes } from "../data/data";
 import React from "react";
-import {menuFilter} from "../utils/filter";
+import { menuFilter } from "../utils/filter";
 
 function Result() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,128 +16,132 @@ function Result() {
   const [mealType, setMealType] = useState(null);
   const [cuisine, setCuisine] = useState(null);
 
+  const FilterInput = ({ name, id, state, setState, tag }) => (
+    <div className="flex items-center space-x-2">
+      <input
+        type="radio"
+        name={name}
+        id={id}
+        value={id}
+        checked={id === state}
+        onChange={(e) => setState(e.target.value)}
+        className="rounded border-gray-300 text-amber-500 focus:ring-amber-500"
+      />
+      <label htmlFor={id} className="text-sm leading-none">
+        {tag}
+      </label>
+    </div>
+  );
 
-
-  const FilterInput = ({ name, id,state, setState, tag }) => (
-      <div className="flex items-center space-x-2">
-        <input
-            type="radio"
+  const FilterSection = ({ title, name, options, state, setState }) => (
+    <div className="mb-4 flex flex-col items-center">
+      <h4 className="font-medium text-sm mb-2">{title}</h4>
+      <div className="flex flex-wrap gap-4">
+        {options.map(({ id, tag }) => (
+          <FilterInput
+            key={id}
             name={name}
             id={id}
-            value={id}
-            checked={id===state}
-            onChange={(e) => setState(e.target.value)}
-            className="rounded border-gray-300 text-amber-500 focus:ring-amber-500"
-        />
-        <label htmlFor={id} className="text-sm leading-none">
-          {tag}
-        </label>
+            state={state}
+            setState={setState}
+            tag={tag}
+          />
+        ))}
       </div>
+    </div>
   );
-
-  const FilterSection = ({ title, name, options,state, setState }) => (
-      <div className="mb-4 flex flex-col items-center">
-        <h4 className="font-medium text-sm mb-2">{title}</h4>
-        <div className="flex flex-wrap gap-4">
-          {options.map(({ id, tag }) => (
-              <FilterInput
-                  key={id}
-                  name={name}
-                  id={id}
-                  state={state}
-                  setState={setState}
-                  tag={tag}
-              />
-          ))}
-        </div>
-      </div>
-  );
-
 
   const filterSections = [
     {
-      title: '味',
-      name: 'taste',
+      title: "味",
+      name: "taste",
       options: [
-        { id: 'sweet', tag: '甘い' },
-        { id: 'spicy', tag: '辛い' },
-        { id: 'light', tag: 'あっさり' },
-        { id: 'rich', tag: 'こってり' },
+        { id: "sweet", tag: "甘い" },
+        { id: "spicy", tag: "辛い" },
+        { id: "light", tag: "あっさり" },
+        { id: "rich", tag: "こってり" },
       ],
-      state:taste,
+      state: taste,
       setState: setTaste,
     },
     {
-      title: '費用',
-      name: 'isCheap',
+      title: "費用",
+      name: "isCheap",
       options: [
-        { id: 'cheap', tag: '安い' },
-        { id: 'expensive', tag: '高い' },
+        { id: "cheap", tag: "安い" },
+        { id: "expensive", tag: "高い" },
       ],
-      state:isCheap,
+      state: isCheap,
       setState: setIsCheap,
     },
     {
-      title: '時間',
-      name: 'isShort',
+      title: "時間",
+      name: "isShort",
       options: [
-        { id: 'short', tag: '短い' },
-        { id: 'long', tag: '長い' },
+        { id: "short", tag: "短い" },
+        { id: "long", tag: "長い" },
       ],
-      state:isShort,
+      state: isShort,
       setState: setIsShort,
     },
     {
-      title: '難易度',
-      name: 'isEasy',
+      title: "難易度",
+      name: "isEasy",
       options: [
-        { id: 'easy', tag: '簡単' },
-        { id: 'difficult', tag: '難しい' },
+        { id: "easy", tag: "簡単" },
+        { id: "difficult", tag: "難しい" },
       ],
-      state:isEasy,
+      state: isEasy,
       setState: setIsEasy,
     },
     {
-      title: '食事タイプ',
-      name: 'mealType',
+      title: "食事タイプ",
+      name: "mealType",
       options: [
-        { id: 'staple', tag: '主食' },
-        { id: 'main', tag: '主菜' },
-        { id: 'side', tag: '副菜' },
-        { id: 'soup', tag: '汁物' },
+        { id: "staple", tag: "主食" },
+        { id: "main", tag: "主菜" },
+        { id: "side", tag: "副菜" },
+        { id: "soup", tag: "汁物" },
       ],
-      state:mealType,
+      state: mealType,
       setState: setMealType,
     },
     {
-      title: '料理のジャンル',
-      name: 'cuisine',
+      title: "料理のジャンル",
+      name: "cuisine",
       options: [
-        { id: 'japanese', tag: '和食' },
-        { id: 'western', tag: '洋食' },
-        { id: 'chinese', tag: '中華' },
-        { id: 'italian', tag: 'イタリアン' },
+        { id: "japanese", tag: "和食" },
+        { id: "western", tag: "洋食" },
+        { id: "chinese", tag: "中華" },
+        { id: "italian", tag: "イタリアン" },
       ],
-      state:cuisine,
+      state: cuisine,
       setState: setCuisine,
     },
   ];
 
   const [menus, setMenus] = useState(recipes);
   useEffect(() => {
-    const filteredMenus=menuFilter(recipes,taste,isCheap,isShort,isEasy,mealType,cuisine)
-    setMenus(filteredMenus)
-  }, [taste,isCheap,isShort,isEasy,mealType,cuisine]);
+    const filteredMenus = menuFilter(
+      recipes,
+      taste,
+      isCheap,
+      isShort,
+      isEasy,
+      mealType,
+      cuisine
+    );
+    setMenus(filteredMenus);
+  }, [taste, isCheap, isShort, isEasy, mealType, cuisine]);
   const handleSearch = (e) => {
     e.preventDefault();
     setMenus(search(menus, searchQuery));
-    console.log("Searching for:", searchQuery, "with filters:", );
+    console.log("Searching for:", searchQuery, "with filters:");
   };
 
   const handleLinkClick = (recipe) => {
     console.log(recipe); // ここでrecipeを確認
   };
-
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-amber-100">
@@ -170,12 +174,12 @@ function Result() {
           {isFilterOpen && ( // フィルターセクションを表示
             <div className="mt-4 p-4 bg-gray-100 rounded-md">
               {filterSections.map((section, index) => (
-                  <React.Fragment key={section.name}>
-                    <FilterSection {...section} />
-                    {index < filterSections.length - 1 && (
-                        <hr className="my-2 border-gray-200" />
-                    )}
-                  </React.Fragment>
+                <React.Fragment key={section.name}>
+                  <FilterSection {...section} />
+                  {index < filterSections.length - 1 && (
+                    <hr className="my-2 border-gray-200" />
+                  )}
+                </React.Fragment>
               ))}
             </div>
           )}

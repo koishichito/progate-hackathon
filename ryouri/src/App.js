@@ -1,12 +1,9 @@
-'use client'
+"use client";
 
 import "./App.css";
-import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Detail from "./detail/detail.js";
 import Result from "./result/result.js";
-import { useNavigate } from 'react-router-dom';
-
 
 function App() {
   return (
@@ -15,7 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/result" element={<Result />} />
-          <Route path="/detail" element={<Detail />} />
+          <Route path="/detail/:id" element={<Detail />} />
         </Routes>
       </div>
     </BrowserRouter>
@@ -30,12 +27,14 @@ function Home() {
         {/* ヘッダー */}
         <div className="text-center">
           <h1 className="text-9xl font-bold text-orange-600 mb-2">ryouri</h1>
-          <p className="text-sm text-orange-800">あなたの料理の冒険が始まります</p>
+          <p className="text-sm text-orange-800">
+            あなたの料理の冒険が始まります
+          </p>
         </div>
         {/* ナビゲーションリンク */}
         <div className="flex justify-around">
-        <Link 
-            to="/result" 
+          <Link
+            to="/result"
             className="bg-orange-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-orange-700 transition duration-300"
           >
             レシピを探す
@@ -43,11 +42,10 @@ function Home() {
         </div>
       </div>
     </div>
-  )
-};
+  );
+}
 
 export default App;
-
 
 // （旧）検索＆詳細検索つき
 // function Home() {
@@ -193,10 +191,3 @@ export default App;
 //     </div>
 //   )
 // }
-
-
-
-
-
-
-
